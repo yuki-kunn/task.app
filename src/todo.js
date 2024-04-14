@@ -29,7 +29,7 @@ export default class Todo extends Component {
     const { todos } = this.state;
     return (<div>
       <input type="text" onInput={this.onInput} />
-      <button onClick={this.addTodo} >登録</button>
+      <button onClick={this.addTodo} >登録ボタン</button>
       <ul>
         {todos.map((todo, index) => <li key={index}>
           {todo}
