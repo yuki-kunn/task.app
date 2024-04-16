@@ -33,7 +33,7 @@ export default class Todo extends Component {
       <ul>
         {todos.map((todo, index) => <li key={index}>
           {todo}
-          <button onClick={() => { this.removeTodo(index) }}>削除</button>
+          <button onClick={() => { this.removeTodo(index) }}>削除ボタン</button>
         </li>)}
       </ul>
     </div>);
