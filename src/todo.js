@@ -39,3 +39,27 @@ export default class Todo extends Component {
     </div>);
   }
 }
+
+const APP_KEY = 'sampleApp'
+
+const Todo = () => {
+  const appState = localStorage.getItem(APP_KEY)
+  const initialState = appState ? JSON.parse(appState) : {
+    events: [],
+    operationLogs: []
+  }
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    localStorage.setItem(APP_KEY, JSON.stringify(state))
+  }, [state])
+
+  return (
+    {/* ---------------------------
+
+       ここに表示させたいフォーマットを書く
+
+     ----------------------------------     */}
+
+  )
+}
