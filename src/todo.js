@@ -42,7 +42,7 @@ export default class Todo extends Component {
 
 const APP_KEY = 'sampleApp'
 
-const Todo = () => {
+const App = () => {
   const appState = localStorage.getItem(APP_KEY)
   const initialState = appState ? JSON.parse(appState) : {
     events: [],
