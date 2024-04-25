@@ -1,65 +1,64 @@
-import React, { Component } from 'react';
-export default class Todo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: [],
-      name: ''
-    };
-  }
-  onInput = (e) => {
-    this.setState({
-      name: e.target.value
-    });
-  }
-  
-  addTodo = () => {
-    const { todos, name } = this.state;
-    this.setState({
-      todos: [...todos, name]
-    });
-  }
-  removeTodo = (index) => {
-    const { todos, name } = this.state;
-    this.setState({
-      todos: [...todos.slice(0, index), ...todos.slice(index + 1)]
-    });
-  }
-  render() {
-    const { todos } = this.state;
-    return (<div>
-      <input type="text" onInput={this.onInput} />
-      <button onClick={this.addTodo} >登録ボタン</button>
-      <ul>
-        {todos.map((todo, index) => <li key={index}>
-          {todo}
-          <button onClick={() => { this.removeTodo(index) }}>削除ボタン</button>
-        </li>)}
-      </ul>
-    </div>);
-  }
-}
+import React, { Component, useState, useEffect, useReducer } from 'react';
 
-const APP_KEY = 'sampleApp'
+const APP_KEY = 'sampleApp';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return {
+        ...state,
+        todos: [...state.todos, action.payload]
+      };
+    case 'REMOVE_TODO':
+      return {
+        ...state,
+        todos: state.todos.filter((_, index) => index !== action.payload)
+      };
+    default:
+      return state;
+  }
+};
 
 const App = () => {
-  const appState = localStorage.getItem(APP_KEY)
+  const appState = localStorage.getItem(APP_KEY);
   const initialState = appState ? JSON.parse(appState) : {
-    events: [],
-    operationLogs: []
-  }
-  const [state, dispatch] = useReducer(reducer, initialState)
+    todos: []
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem(APP_KEY, JSON.stringify(state))
-  }, [state])
+    localStorage.setItem(APP_KEY, JSON.stringify(state));
+  }, [state]);
+
+  const addTodo = () => {
+    dispatch({ type: 'ADD_TODO', payload: state.name });
+    setState({ name: '' }); // Clear input field after adding todo
+  };
+
+  const removeTodo = (index) => {
+    dispatch({ type: 'REMOVE_TODO', payload: index });
+  };
+
+  const [todoValue, setTodoValue] = useState('');
+
+  const onInput = (e) => {
+    setTodoValue(e.target.value);
+  };
 
   return (
-    {/* ---------------------------
+    <div>
+      <input type="text" value={todoValue} onInput={onInput} />
+      <button id="touroku" onClick={addTodo}>登録ボタン</button>
+      <ul>
+        {state.todos.map((todo, index) => (
+          <li key={index}>
+            {todo}
+            <button onClick={() => removeTodo(index)}>削除ボタン</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-       ここに表示させたいフォーマットを書く
-
-     ----------------------------------     */}
-
-  )
-}
+export default App;
