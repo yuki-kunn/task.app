@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 
 const APP_KEY = 'sampleApp';
 
@@ -31,8 +31,8 @@ const App = () => {
   }, [state]);
 
   const addTodo = () => {
-    dispatch({ type: 'ADD_TODO', payload: state.name });
-    setState({ name: '' }); // Clear input field after adding todo
+    dispatch({ type: 'ADD_TODO', payload: todoValue });
+    setTodoValue(''); // Clear input field after adding todo
   };
 
   const removeTodo = (index) => {
