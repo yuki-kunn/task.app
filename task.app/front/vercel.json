@@ -1,13 +1,8 @@
 {
     "version": 2,
-    "builds": [
-      {
-        "src": "next.config.js",
-        "use": "@vercel/next"
-      }
-    ],
-    "devCommand": "npm run dev",
     "buildCommand": "npm run dev",
+    "devCommand": "npm run dev",
+    "framework": "nextjs",
     "routes": [
       {
         "src": "/(.*)",
